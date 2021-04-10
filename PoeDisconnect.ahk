@@ -41,5 +41,5 @@ if (not FileExist("cports\cports.exe"))
 #IfWinActive ahk_class POEWindowClass
     F2::
         critical
-        RunWait, cports.exe /close * * * * PathOfExile_x64Steam.exe
+        RunWait, cports\cports.exe /close * * * * PathOfExile_x64Steam.exe
     return
