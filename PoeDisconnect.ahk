@@ -114,8 +114,8 @@ CreateHotkey() {
     Binaries := {"Standalone": {"32 Bit": "PathofExile.exe", "64 Bit": "PathofExile_x64.exe"}, "Steam": {"32 Bit": "PathofExileSteam.exe", "64 Bit": "PathOfExile_x64Steam.exe"}}
     Binary := Binaries[Client][Architecture]
 
-    ;Hotkey, IfWinActive, ahk_class POEWindowClass
-    Hotkey, % Logout, Command, On
+    Hotkey, IfWinActive, ahk_class POEWindowClass
+        Hotkey, % Logout, Command, On
 }
 
 ; Delete hotkey
