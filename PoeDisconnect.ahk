@@ -32,11 +32,10 @@ if (not FileExist("cports\cports.exe")) {
 }
 
 ; Global vars
-global Binary, Client, Architecture, Logout
+global Binary, Client, Logout
 
 ; Read settings
 IniRead, Client, settings\settings.ini, Settings, Client, Steam
-IniRead, Architecture, settings\settings.ini, Settings, Architecture, 64 Bit
 IniRead, Logout, settings\settings.ini, Settings, Logout, F2
 
 ; Create Hotkey
@@ -60,12 +59,6 @@ SettingsHandler:
 
     GuiControl,, % Client, 1
 
-    Gui, Add, GroupBox, xm w90 Section, Architecture
-    Gui, Add, Radio, vArchitectureInput xs+10 ys+20, 32 Bit
-    Gui, Add, Radio, xs+10 ys+40, 64 Bit
-
-    GuiControl,, % Architecture, 1
-
     Gui, Add, GroupBox, xm w90 Section, Logout Hotkey
     Gui, Add, Hotkey, vLogoutInput xs+10 ys+20 w70, % Logout
 
@@ -79,14 +72,12 @@ ButtonSave:
     Gui, Destroy
 
     Clients := {1: "Standalone", 2: "Steam"}
-    Architectures := {1: "32 Bit", 2: "64 Bit"}
 
     if (Logout <> LogoutInput) {
         DeleteHotkey()
     }
 
     Client := Clients[ClientInput]
-    Architecture := Architectures[ArchitectureInput]
     Logout := LogoutInput
 
     CreateHotkey()
@@ -99,7 +90,6 @@ ButtonSave:
     }
 
     IniWrite, % Client, settings\settings.ini, Settings, Client
-    IniWrite, % Architecture, settings\settings.ini, Settings, Architecture
     IniWrite, % Logout, settings\settings.ini, Settings, Logout
 
     FileSetAttrib, +R, settings\settings.ini
@@ -111,8 +101,8 @@ ExitApp
 
 ; Create hotkey
 CreateHotkey() {
-    Binaries := {"Standalone": {"32 Bit": "PathofExile.exe", "64 Bit": "PathofExile_x64.exe"}, "Steam": {"32 Bit": "PathofExileSteam.exe", "64 Bit": "PathOfExile_x64Steam.exe"}}
-    Binary := Binaries[Client][Architecture]
+    Binaries := {"Standalone": "PathofExile.exe", "Steam": "PathofExileSteam.exe"}
+    Binary := Binaries[Client]
 
     Hotkey, IfWinActive, ahk_class POEWindowClass
         Hotkey, % Logout, Command, On
